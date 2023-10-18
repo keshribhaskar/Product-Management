@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductDetails getProductById(Integer productId) throws Exception {
         Optional<AllProductEntity> productData = productRepo.findById(productId);
-        AllProductEntity product = productData.orElseThrow(() -> new Exception("ProductService.PRODUCT_NOT_AVAILABLE"));
+        AllProductEntity product = productData.orElseThrow(() -> new Exception("Product not available"));
         ProductDetails pd = new ProductDetails();
         pd.setProductId(product.getProductId());
         pd.setName(product.getName());
