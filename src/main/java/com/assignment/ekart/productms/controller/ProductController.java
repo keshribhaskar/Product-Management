@@ -5,6 +5,7 @@ import com.assignment.ekart.productms.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,14 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Value("${application.product.name}")
+    private String productApp;
+
+    @Value("${application.kart.name}")
+    private String kartApp;
+
+    @Value("${application.customer.name}")
+    private String customerApp;
 
     @GetMapping(value = "/product")
     public ResponseEntity<List<ProductDetails>> getAllProducts() throws Exception {
