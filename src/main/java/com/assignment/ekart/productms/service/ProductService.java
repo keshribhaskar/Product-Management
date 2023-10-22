@@ -8,7 +8,5 @@ public interface ProductService {
     public List<ProductDetails> getAllProducts();
     public ProductDetails getProductById(Integer productId) throws Exception;
     public String addProduct(ProductDetails product);
-
-
-
+    public String deleteProduct();
 }

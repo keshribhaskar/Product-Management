@@ -99,4 +99,17 @@ public class ProductControllerTest {
         Assertions.assertEquals(expectedData,actualData);
     }
 
+    @Test
+    public void deleteProductTest() throws Exception {
+        String expectedData = "Product deleted.";
+        when(productService.deleteProduct()).thenReturn("Product deleted.");
+        ResponseEntity<String> responseEntity = productController.deleteProduct();
+
+        HttpStatusCode expected = OK;
+        HttpStatusCode actual = responseEntity.getStatusCode();
+        String actualData = responseEntity.getBody();
+        Assertions.assertEquals(expected,actual);
+        Assertions.assertEquals(expectedData,actualData);
+    }
+
 }

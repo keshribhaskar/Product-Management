@@ -64,4 +64,36 @@ public class ProductServiceTest {
         Assertions.assertEquals(expected,actual);
     }
 
+    @Test
+    @Order(5)
+    public void deleteProductTest() throws JsonProcessingException {
+        String expected = "\"Product deleted.\"";
+        String deleteProduct = productService.deleteProduct();
+        String actual = mapper.writeValueAsString(deleteProduct);
+        Assertions.assertEquals(expected,actual);
+    }
+    @Test
+    public void deleteProductFailedTest() throws JsonProcessingException {
+        String expected = "\"Product is not present.\"";
+        String deleteProduct = productService.deleteProduct();
+        String actual = mapper.writeValueAsString(deleteProduct);
+        Assertions.assertEquals(expected,actual);
+    }
+    @Test
+    public void getAllProductsFailedTest() throws JsonProcessingException {
+        String expected = "[{\"error\":\"No product is available.\"}]";
+        List<ProductDetails> productDetails = productService.getAllProducts();
+        String actual = mapper.writeValueAsString(productDetails);
+        Assertions.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void getProductByIdFailedTest() throws Exception {
+        int productId = 5;
+        String expected = "{\"error\":\"Product not available\"}";
+        ProductDetails productDetails = productService.getProductById(productId);
+        String actual = mapper.writeValueAsString(productDetails);
+        Assertions.assertEquals(expected,actual);
+    }
+
 }

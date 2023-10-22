@@ -21,15 +21,24 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductDetails> getAllProducts() {
         List<AllProductEntity> ape = productRepo.findAll();
         List<ProductDetails> pdl = new ArrayList<>();
-        for(AllProductEntity p : ape){
-            ProductDetails pd = new ProductDetails();
-            pd.setProductId(p.getProductId());
-            pd.setName(p.getName());
-            pd.setBrand(p.getBrand());
-            pd.setDescription(p.getDescription());
-            pd.setCategory(p.getCategory());
-            pd.setPrice(p.getPrice());
-            pd.setAvailableQuantity(p.getAvailableQuantity());
+        try{
+            if(ape.isEmpty()){
+                throw new Exception("No product is available.");
+            }else{
+                for(AllProductEntity p : ape) {
+                    ProductDetails pd = new ProductDetails();
+                    pd.setProductId(p.getProductId());
+                    pd.setName(p.getName());
+                    pd.setBrand(p.getBrand());
+                    pd.setDescription(p.getDescription());
+                    pd.setCategory(p.getCategory());
+                    pd.setPrice(p.getPrice());
+                    pd.setAvailableQuantity(p.getAvailableQuantity());
+                    pdl.add(pd);
+                }
+            }
+        }catch (Exception e){
+            ProductDetails pd = ProductDetails.builder().error(e.getMessage()).build();
             pdl.add(pd);
         }
         return pdl;
@@ -38,16 +47,24 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductDetails getProductById(Integer productId) throws Exception {
         Optional<AllProductEntity> productData = productRepo.findById(productId);
-        AllProductEntity product = productData.orElseThrow(() -> new Exception("Product not available"));
-        ProductDetails pd = new ProductDetails();
-        pd.setProductId(product.getProductId());
-        pd.setName(product.getName());
-        pd.setBrand(product.getBrand());
-        pd.setDescription(product.getDescription());
-        pd.setCategory(product.getCategory());
-        pd.setPrice(product.getPrice());
-        pd.setAvailableQuantity(product.getAvailableQuantity());
-        return pd;
+        try{
+            AllProductEntity product = productData.orElseThrow(() -> new Exception("Product not available"));
+            ProductDetails pd = ProductDetails.builder()
+                    .productId(product.getProductId())
+                    .name(product.getName())
+                    .brand(product.getBrand())
+                    .price(product.getPrice())
+                    .category(product.getCategory())
+                    .description(product.getDescription())
+                    .availableQuantity(product.getAvailableQuantity())
+                    .build();
+            return pd;
+        }catch (Exception e){
+            ProductDetails pdError = ProductDetails.builder().error(e.getMessage()).build();
+            return  pdError;
+        }
+
+
     }
 
     @Override
@@ -66,6 +83,17 @@ public class ProductServiceImpl implements ProductService{
             return "Product added.";
         }catch (Exception e){
             return "Product addition failed. "+ e.getMessage();
+        }
+    }
+
+    @Override
+    public String deleteProduct() {
+        List<AllProductEntity> productData = productRepo.findAll();
+        if(productData.isEmpty()){
+            return "Product is not present.";
+        }else{
+            productRepo.deleteAll();
+            return "Product deleted.";
         }
     }
 }

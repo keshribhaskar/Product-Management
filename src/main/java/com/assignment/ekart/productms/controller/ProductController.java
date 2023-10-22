@@ -20,14 +20,6 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-    @Value("${application.product.name}")
-    private String productApp;
-
-    @Value("${application.kart.name}")
-    private String kartApp;
-
-    @Value("${application.customer.name}")
-    private String customerApp;
 
     @GetMapping(value = "/product")
     public ResponseEntity<List<ProductDetails>> getAllProducts() throws Exception {
@@ -45,7 +37,12 @@ public class ProductController {
     public ResponseEntity<String> addNewProduct(@Valid @RequestBody ProductDetails product) throws Exception {
         String message = productService.addProduct(product);
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 
+    @DeleteMapping(value = "/deleteProduct/{productId}")
+    public ResponseEntity<String> deleteProduct() throws Exception {
+        String message = productService.deleteProduct();
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 }
