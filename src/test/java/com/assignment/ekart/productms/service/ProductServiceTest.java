@@ -57,7 +57,7 @@ public class ProductServiceTest {
     @Test
     @Order(4)
     public void addProductFailedTest() {
-        String expected = "Product addition failed. Cannot invoke \"com.assignment.ekart.productms.model.ProductDetails.getName()\" because \"product\" is null";
+        String expected = "Failed to add product.Cannot invoke \"com.assignment.ekart.productms.model.ProductDetails.getName()\" because \"product\" is null";
         ProductDetails product1 = new ProductDetails();
         product1 = null;
         String actual = productService.addProduct(product1);
@@ -66,22 +66,32 @@ public class ProductServiceTest {
 
     @Test
     @Order(5)
+    public void deleteProductByIdSuccessTest() throws Exception {
+        int productId = 1;
+        String expected = "Product deleted.";
+        String actual = productService.deleteProductById(productId);
+        Assertions.assertEquals(expected,actual);
+    }
+
+    @Test
+    @Order(6)
     public void deleteProductTest() throws JsonProcessingException {
         String expected = "\"Product deleted.\"";
+        productService.addProduct(product);
         String deleteProduct = productService.deleteProduct();
         String actual = mapper.writeValueAsString(deleteProduct);
         Assertions.assertEquals(expected,actual);
     }
     @Test
     public void deleteProductFailedTest() throws JsonProcessingException {
-        String expected = "\"Product is not present.\"";
+        String expected = "\"Product not found\"";
         String deleteProduct = productService.deleteProduct();
         String actual = mapper.writeValueAsString(deleteProduct);
         Assertions.assertEquals(expected,actual);
     }
     @Test
     public void getAllProductsFailedTest() throws JsonProcessingException {
-        String expected = "[{\"error\":\"No product is available.\"}]";
+        String expected = "[{\"error\":\"Product not found\"}]";
         List<ProductDetails> productDetails = productService.getAllProducts();
         String actual = mapper.writeValueAsString(productDetails);
         Assertions.assertEquals(expected,actual);
@@ -90,9 +100,17 @@ public class ProductServiceTest {
     @Test
     public void getProductByIdFailedTest() throws Exception {
         int productId = 5;
-        String expected = "{\"error\":\"Product not available\"}";
+        String expected = "{\"error\":\"Product not found\"}";
         ProductDetails productDetails = productService.getProductById(productId);
         String actual = mapper.writeValueAsString(productDetails);
+        Assertions.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void deleteProductByIdFailedTest() throws Exception {
+        int productId = 5;
+        String expected = "Deletion failed for the product.Product not found";
+        String actual = productService.deleteProductById(productId);
         Assertions.assertEquals(expected,actual);
     }
 

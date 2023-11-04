@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @ExtendWith(MockitoExtension.class)
@@ -92,7 +93,7 @@ public class ProductControllerTest {
         when(productService.addProduct(product)).thenReturn("Product added.");
         ResponseEntity<String> responseEntity = productController.addNewProduct(product);
 
-        HttpStatusCode expected = OK;
+        HttpStatusCode expected = CREATED;
         HttpStatusCode actual = responseEntity.getStatusCode();
         String actualData = responseEntity.getBody();
         Assertions.assertEquals(expected,actual);
