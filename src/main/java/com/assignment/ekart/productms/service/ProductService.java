@@ -9,4 +9,5 @@ public interface ProductService {
     public ProductDetails getProductById(Integer productId) throws Exception;
     public String addProduct(ProductDetails product);
     public String deleteProduct();
+    public String  deleteProductById(Integer id);
 }

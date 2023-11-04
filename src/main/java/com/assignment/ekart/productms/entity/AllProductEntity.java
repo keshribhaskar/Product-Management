@@ -18,7 +18,7 @@ public class AllProductEntity {
     @Column(name = "PRODUCT_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productId;
-
+ 
     @Column(name = "NAME")
     private String name;
 
