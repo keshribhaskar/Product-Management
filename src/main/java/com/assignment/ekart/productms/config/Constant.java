@@ -13,10 +13,9 @@ public class Constant {
     public static final String SUCCESS_ADD_PRODUCT = "Product added.";
     public static final String DELETION_FAILED = "Deletion failed for the product.";
 
+    public static final String UPDATE_SUCCESS = "Product updated.";
+    public static final String UPDATE_FAILED = "Failed to update product.";
     public static final String DELETION_SUCCESS = "Product deleted.";
     public static final String PRODUCT_NOT_FOUND = "Product not found";
-    public static final String HTTP_HEAD = "http://";
-    public static final String KART_ENDPOINT = "/kartApi/products";
-    public static final String PRODUCT_ENDPOINT = "/productApi/product/";
 
 }
